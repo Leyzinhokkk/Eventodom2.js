@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>App de Anotações</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  h1 {
+    text-align: center;
+  }
+  #inputContainer {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  input[type="text"] {
+    flex-grow: 1;
+    padding: 8px;
+    font-size: 1rem;
+  }
+  button {
+    padding: 8px 15px;
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: #004080;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  button:hover {
+    background-color: #0066cc;
+  }
+  ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  li {
+    background: #f0f8ff;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .deleteBtn {
+    background-color: #cc0000;
+    border: none;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+  }
+  .deleteBtn:hover {
+    background-color: #ff3333;
+  }
+  @media (max-width: 480px) {
+    body {
+      margin: 10px;
+    }
+    button {
+      padding: 8px 10px;
+      font-size: 0.9rem;
+    }
+    .deleteBtn {
+      padding: 5px 8px;
+      font-size: 0.8rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<h1>App de Anotações</h1>
+
+<div id="inputContainer">
+  <input type="text" id="notaInput" placeholder="Digite sua nota aqui" />
+  <button id="adicionarBtn">Adicionar Nota</button>
+</div>
+
+<ul id="listaNotas"></ul>
+
+<script>
+  const notaInput = document.getElementById('notaInput');
+  const adicionarBtn = document.getElementById('adicionarBtn');
+  const listaNotas = document.getElementById('listaNotas');
+
+  function adicionarNota() {
+    const texto = notaInput.value.trim();
+    if (texto === '') {
+      alert('Por favor, digite uma nota antes de adicionar.');
+      return;
+    }
+
+    const li = document.createElement('li');
+    li.textContent = texto;
+
+    const btnExcluir = document.createElement('button');
+    btnExcluir.textContent = 'Excluir';
+    btnExcluir.classList.add('deleteBtn');
+
+    btnExcluir.addEventListener('click', () => {
+      listaNotas.removeChild(li);
+    });
+
+    li.appendChild(btnExcluir);
+
+    listaNotas.appendChild(li);
+
+    notaInput.value = '';
+    notaInput.focus();
+  }
+
+  adicionarBtn.addEventListener('click', adicionarNota);
+
+  notaInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      adicionarNota();
+    }
+  });
+</script>
+
+</body>
+</html>
